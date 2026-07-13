@@ -31,7 +31,7 @@ export default function Home() {
             AI-Powered Study & Vent Buddy
           </div>
           <h1 className="text-5xl font-bold text-gray-900 tracking-tight">
-            Yusuf
+            Partner
             <span className="text-emerald-600"> AI</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">

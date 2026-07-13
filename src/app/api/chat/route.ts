@@ -40,17 +40,18 @@ export async function POST(request: NextRequest) {
       if (insertError) console.error("Insert user message error:", insertError);
     }
 
-    // Load conversation history for AI context (last 20 messages)
+    // Load conversation history for AI context (last 20 messages, excluding current)
     let history: { role: "user" | "assistant"; content: string }[] = [];
     const { data: historyData } = await supabase
       .from("chat_messages")
       .select("role, content")
       .eq("conversation_id", conversationId)
       .order("created_at", { ascending: true })
-      .limit(20);
+      .limit(21);
 
-    if (historyData) {
-      history = historyData as { role: "user" | "assistant"; content: string }[];
+    if (historyData && historyData.length > 0) {
+      // Remove the last message (current user message) from history
+      history = historyData.slice(0, -1) as { role: "user" | "assistant"; content: string }[];
     }
 
     // Generate AI response with history context

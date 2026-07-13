@@ -77,7 +77,6 @@ export default function ChatPage() {
 
     const userMessage = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setSending(true);
 
     try {
@@ -93,12 +92,21 @@ export default function ChatPage() {
 
         if (convError) {
           console.error("Create conversation error:", convError);
+          setSending(false);
+          return;
         } else if (newConv) {
           convId = newConv.id;
           setActiveConversationId(convId);
-          setSidebarRefreshKey((k) => k + 1);
         }
       }
+
+      if (!convId) {
+        setSending(false);
+        return;
+      }
+
+      // Add user message to UI after conversation is confirmed
+      setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
 
       const res = await fetch("/api/chat", {
         method: "POST",

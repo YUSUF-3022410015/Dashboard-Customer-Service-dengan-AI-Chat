@@ -35,7 +35,6 @@ export function ConversationSidebar({
       if (!user) return;
       setLoading(true);
 
-      console.log("Loading conversations for user:", user.id);
       const { data, error } = await supabase
         .from("conversations")
         .select("id, title, updated_at")
@@ -44,8 +43,6 @@ export function ConversationSidebar({
 
       if (error) {
         console.error("Load conversations error:", error);
-      } else {
-        console.log("Conversations loaded:", data?.length, data);
       }
 
       if (data) {

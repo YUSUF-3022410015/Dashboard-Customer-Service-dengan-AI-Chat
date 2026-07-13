@@ -34,9 +34,11 @@ export default function DashboardPage() {
         .from("chat_messages")
         .select("*", { count: "exact", head: true });
 
-      const { count: totalUsers } = await supabase
+      const { data: userData } = await supabase
         .from("chat_messages")
-        .select("user_id", { count: "exact", head: true });
+        .select("user_id");
+
+      const uniqueUsers = userData ? new Set(userData.map((u) => u.user_id)).size : 0;
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -47,7 +49,7 @@ export default function DashboardPage() {
 
       setStats({
         totalMessages: totalMessages || 0,
-        totalUsers: totalUsers || 0,
+        totalUsers: uniqueUsers,
         todayMessages: todayMessages || 0,
       });
     }

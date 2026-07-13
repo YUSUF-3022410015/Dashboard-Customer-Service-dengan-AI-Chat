@@ -4,6 +4,13 @@ import { createServerClient } from "@/lib/supabase-server";
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "GEMINI_API_KEY belum dikonfigurasi di server" },
+        { status: 500 }
+      );
+    }
+
     const { message, userId } = await request.json();
 
     if (!message) {
@@ -13,9 +20,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = await createServerClient();
+    const supabase = createServerClient();
 
-    // Save user message to database
     if (userId) {
       await supabase.from("chat_messages").insert({
         user_id: userId,
@@ -24,10 +30,8 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Generate AI response
     const aiResponse = await generateChatResponse(message);
 
-    // Save AI response to database
     if (userId) {
       await supabase.from("chat_messages").insert({
         user_id: userId,

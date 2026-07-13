@@ -8,10 +8,27 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export type Database = {
   public: {
     Tables: {
+      conversations: {
+        Row: {
+          id: string;
+          user_id: string;
+          title: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          title?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
       chat_messages: {
         Row: {
           id: string;
           user_id: string;
+          conversation_id: string;
           role: "user" | "assistant";
           content: string;
           created_at: string;
@@ -19,6 +36,7 @@ export type Database = {
         Insert: {
           id?: string;
           user_id: string;
+          conversation_id: string;
           role: "user" | "assistant";
           content: string;
           created_at?: string;

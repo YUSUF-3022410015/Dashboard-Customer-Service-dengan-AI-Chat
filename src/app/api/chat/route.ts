@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { message, userId } = await request.json();
+    const { message, userId, conversationId } = await request.json();
 
     if (!message) {
       return NextResponse.json(
@@ -22,27 +22,77 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerClient();
 
-    if (userId) {
+    let activeConversationId = conversationId;
+
+    // Create new conversation if none provided
+    if (!activeConversationId && userId) {
+      const title = message.length > 30 ? message.substring(0, 30) + "..." : message;
+      const { data: newConv, error: convError } = await supabase
+        .from("conversations")
+        .insert({
+          user_id: userId,
+          title,
+        })
+        .select("id")
+        .single();
+
+      if (convError) {
+        console.error("Create conversation error:", convError);
+      } else {
+        activeConversationId = newConv.id;
+      }
+    }
+
+    // Save user message
+    if (userId && activeConversationId) {
       const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
+        conversation_id: activeConversationId,
         role: "user",
         content: message,
       });
       if (insertError) console.error("Insert user message error:", insertError);
     }
 
-    const aiResponse = await generateChatResponse(message);
+    // Load conversation history for AI context (last 20 messages)
+    let history: { role: "user" | "assistant"; content: string }[] = [];
+    if (activeConversationId) {
+      const { data: historyData } = await supabase
+        .from("chat_messages")
+        .select("role, content")
+        .eq("conversation_id", activeConversationId)
+        .order("created_at", { ascending: true })
+        .limit(20);
 
-    if (userId) {
+      if (historyData) {
+        history = historyData as { role: "user" | "assistant"; content: string }[];
+      }
+    }
+
+    // Generate AI response with history context
+    const aiResponse = await generateChatResponse(message, history);
+
+    // Save AI response
+    if (userId && activeConversationId) {
       const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
+        conversation_id: activeConversationId,
         role: "assistant",
         content: aiResponse,
       });
       if (insertError) console.error("Insert assistant message error:", insertError);
+
+      // Update conversation timestamp
+      await supabase
+        .from("conversations")
+        .update({ updated_at: new Date().toISOString() })
+        .eq("id", activeConversationId);
     }
 
-    return NextResponse.json({ response: aiResponse });
+    return NextResponse.json({
+      response: aiResponse,
+      conversationId: activeConversationId,
+    });
   } catch (error: unknown) {
     console.error("Chat API Error:", error);
     const message = error instanceof Error ? error.message : "Unknown error";

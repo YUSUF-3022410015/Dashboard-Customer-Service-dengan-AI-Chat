@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, Content } from "@google/generative-ai";
 
 const apiKey = process.env.GEMINI_API_KEY;
 
@@ -16,7 +16,15 @@ Kalau ditanya soal akademik, bantu jawab dengan penjelasan yang gampang dipahami
 Kalau lagi curhat, dengerin dan kasih semangat.
 Selalu jawab dalam Bahasa Indonesia dengan gaya santai.`;
 
-export async function generateChatResponse(message: string): Promise<string> {
+interface HistoryMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export async function generateChatResponse(
+  message: string,
+  history: HistoryMessage[] = []
+): Promise<string> {
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY belum dikonfigurasi di Vercel Environment Variables");
   }
@@ -26,7 +34,12 @@ export async function generateChatResponse(message: string): Promise<string> {
     systemInstruction,
   });
 
-  const result = await model.generateContent(message);
-  const response = result.response;
-  return response.text();
+  const chatHistory: Content[] = history.map((msg) => ({
+    role: msg.role === "assistant" ? "model" : "user",
+    parts: [{ text: msg.content }],
+  }));
+
+  const chat = model.startChat({ history: chatHistory });
+  const result = await chat.sendMessage(message);
+  return result.response.text();
 }

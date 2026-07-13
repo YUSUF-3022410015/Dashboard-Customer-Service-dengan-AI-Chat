@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 const systemInstruction = `Kamu adalah 'Yusuf AI', asisten bisnis cerdas untuk Toko Masyusuf. 
 Tugasmu membantu pelanggan memilih beras terbaik (Rojo Lele, Rinjani, atau Ramos). 
@@ -10,16 +10,11 @@ Selalu jawab dalam Bahasa Indonesia.`;
 
 export async function generateChatResponse(message: string): Promise<string> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash-lite",
+    model: "gemini-1.5-flash",
     systemInstruction,
   });
 
-  try {
-    const result = await model.generateContent(message);
-    const response = result.response;
-    return response.text();
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "Waduh, ada kendala teknis. Silakan coba lagi dalam beberapa saat.";
-  }
+  const result = await model.generateContent(message);
+  const response = result.response;
+  return response.text();
 }

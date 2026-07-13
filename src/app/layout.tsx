@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Yusuf AI - Business Assistant",
-  description: "Chatbot AI untuk membantu pelanggan Toko Masyusuf",
+  title: "Yusuf AI - Temen Curhat & Belajar",
+  description: "AI chatbot temen curhat, belajar, dan ngobrol santai",
 };
 
 export default function RootLayout({

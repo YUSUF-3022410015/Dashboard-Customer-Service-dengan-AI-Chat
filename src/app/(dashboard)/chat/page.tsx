@@ -131,17 +131,16 @@ export default function ChatPage() {
               <Bot className="h-10 w-10 text-emerald-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Selamat Datang di Yusuf AI!
+              Hey! Ada yang bisa dibantu?
             </h3>
             <p className="text-gray-500 max-w-md mx-auto">
-              Saya adalah asisten AI untuk Toko Masyusuf. Silakan tanyakan tentang
-              beras Rojo Lele, Rinjani, atau Ramos!
+              Yusuf AI siap jadi temen curhat, tanya tugas, atau sekadar ngobrol santai.
             </p>
             <div className="flex flex-wrap gap-2 justify-center mt-4">
               {[
-                "Beras apa yang cocok untuk nasi goreng?",
-                "Apa bedanya Rojo Lele dan Rinjani?",
-                "Beras Ramos harganya berapa?",
+                "Gimana cara belajar TypeScript yang bener?",
+                "Aku lagi stress sama tugas nih",
+                "Jelasin dong soal database!",
               ].map((suggestion) => (
                 <button
                   key={suggestion}

@@ -130,14 +130,13 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Yusuf AI adalah chatbot customer service yang membantu pelanggan
-            Toko Masyusuf memilih beras terbaik. Didukung oleh Google Gemini AI
-            model gemini-2.5-flash-lite.
+            Yusuf AI adalah temen curhat dan belajar berbasis AI.
+            Didukung oleh Google Gemini AI model gemini-2.0-flash.
           </p>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="bg-emerald-50 p-4 rounded-lg">
-              <p className="font-medium text-emerald-800">Varietas Beras:</p>
-              <p className="text-emerald-600">Rojo Lele, Rinjani, Ramos</p>
+              <p className="font-medium text-emerald-800">Fitur:</p>
+              <p className="text-emerald-600">Curhat, Belajar, Ngobrol</p>
             </div>
             <div className="bg-blue-50 p-4 rounded-lg">
               <p className="font-medium text-blue-800">Teknologi:</p>

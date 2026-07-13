@@ -28,15 +28,15 @@ export default function Home() {
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium">
             <MessageCircle className="h-4 w-4" />
-            AI-Powered Customer Service
+            AI-Powered Study & Vent Buddy
           </div>
           <h1 className="text-5xl font-bold text-gray-900 tracking-tight">
-            Yusuf Business
-            <span className="text-emerald-600"> Assistant</span>
+            Yusuf
+            <span className="text-emerald-600"> AI</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Asisten bisnis cerdas untuk Toko Masyusuf. Bantu pelanggan memilih
-            beras terbaik dengan respons otomatis berbasis AI.
+            Temen curhat, belajar, dan ngobrol santai berbasis AI.
+            Kapan aja bisa cerita, tanya tugas, atau sekadar brainstorming.
           </p>
           <div className="flex gap-4 justify-center pt-4">
             <Link href="/register">
@@ -59,11 +59,11 @@ export default function Home() {
               <Bot className="h-6 w-6 text-emerald-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              AI Chat Otomatis
+              Curhat & Ngobrol
             </h3>
             <p className="text-gray-600">
-              Jawab pertanyaan pelanggan 24/7 tentang produk beras Rojo Lele,
-              Rinjani, dan Ramos.
+              Lagi ada masalah? Cerita aja ke Yusuf AI. Dengerin, support,
+              dan kasih solusi dengan santai.
             </p>
           </div>
 
@@ -72,11 +72,11 @@ export default function Home() {
               <Zap className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Respon Real-time
+              Bantu Belajar
             </h3>
             <p className="text-gray-600">
-              Chat langsung dengan respons cepat menggunakan Google Gemini AI
-              model terbaru.
+              Tugas numpuk? Bingung materi kuliah? Yusuf AI bantu jelasin
+              dengan cara yang gampang dipahami.
             </p>
           </div>
 
@@ -85,11 +85,11 @@ export default function Home() {
               <Shield className="h-6 w-6 text-purple-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Aman & Terpercaya
+              Privat & Aman
             </h3>
             <p className="text-gray-600">
-              Autentikasi aman dengan Supabase Auth. Riwayat chat tersimpan
-              aman di database.
+              Chat hanya tersimpan di akun kamu. Autentikasi aman dengan
+              Supabase Auth.
             </p>
           </div>
         </div>

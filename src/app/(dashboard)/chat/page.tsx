@@ -149,20 +149,9 @@ export default function ChatPage() {
       />
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <div className="bg-emerald-600 text-white p-4 flex items-center gap-3">
-          <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
-            <Bot className="h-6 w-6" />
-          </div>
-          <div>
-            <h2 className="font-semibold">Yusuf AI Assistant</h2>
-            <p className="text-emerald-100 text-sm">Online - Siap membantu Anda</p>
-          </div>
-        </div>
-
+      <div className="flex-1 flex flex-col bg-white">
         {/* Messages or Welcome Screen */}
-        <div className="flex-1 bg-white overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && !activeConversationId ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">

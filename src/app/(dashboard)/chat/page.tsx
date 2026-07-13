@@ -81,13 +81,32 @@ export default function ChatPage() {
     setSending(true);
 
     try {
+      // Create conversation from client side if needed (so RLS works)
+      let convId = activeConversationId;
+      if (!convId && user) {
+        const title = userMessage.length > 30 ? userMessage.substring(0, 30) + "..." : userMessage;
+        const { data: newConv, error: convError } = await supabase
+          .from("conversations")
+          .insert({ user_id: user.id, title })
+          .select("id")
+          .single();
+
+        if (convError) {
+          console.error("Create conversation error:", convError);
+        } else if (newConv) {
+          convId = newConv.id;
+          setActiveConversationId(convId);
+          setSidebarRefreshKey((k) => k + 1);
+        }
+      }
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userMessage,
           userId: user?.id,
-          conversationId: activeConversationId,
+          conversationId: convId,
         }),
       });
 
@@ -98,13 +117,7 @@ export default function ChatPage() {
           ...prev,
           { role: "assistant", content: data.response },
         ]);
-
-        if (data.conversationId && !activeConversationId) {
-          setActiveConversationId(data.conversationId);
-          setSidebarRefreshKey((k) => k + 1);
-        } else if (data.conversationId) {
-          setSidebarRefreshKey((k) => k + 1);
-        }
+        setSidebarRefreshKey((k) => k + 1);
       } else if (data.error) {
         setMessages((prev) => [
           ...prev,

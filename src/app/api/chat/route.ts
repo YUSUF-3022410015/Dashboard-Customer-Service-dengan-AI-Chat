@@ -20,36 +20,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createServerClient();
-
-    let activeConversationId = conversationId;
-
-    // Create new conversation if none provided
-    if (!activeConversationId && userId) {
-      const title = message.length > 30 ? message.substring(0, 30) + "..." : message;
-      console.log("Creating conversation for user:", userId, "title:", title);
-      const { data: newConv, error: convError } = await supabase
-        .from("conversations")
-        .insert({
-          user_id: userId,
-          title,
-        })
-        .select("id")
-        .single();
-
-      if (convError) {
-        console.error("Create conversation error:", convError);
-      } else {
-        console.log("Conversation created:", newConv.id);
-        activeConversationId = newConv.id;
-      }
+    if (!conversationId) {
+      return NextResponse.json(
+        { error: "conversationId is required" },
+        { status: 400 }
+      );
     }
 
+    const supabase = createServerClient();
+
     // Save user message
-    if (userId && activeConversationId) {
+    if (userId) {
       const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
-        conversation_id: activeConversationId,
+        conversation_id: conversationId,
         role: "user",
         content: message,
       });
@@ -58,27 +42,25 @@ export async function POST(request: NextRequest) {
 
     // Load conversation history for AI context (last 20 messages)
     let history: { role: "user" | "assistant"; content: string }[] = [];
-    if (activeConversationId) {
-      const { data: historyData } = await supabase
-        .from("chat_messages")
-        .select("role, content")
-        .eq("conversation_id", activeConversationId)
-        .order("created_at", { ascending: true })
-        .limit(20);
+    const { data: historyData } = await supabase
+      .from("chat_messages")
+      .select("role, content")
+      .eq("conversation_id", conversationId)
+      .order("created_at", { ascending: true })
+      .limit(20);
 
-      if (historyData) {
-        history = historyData as { role: "user" | "assistant"; content: string }[];
-      }
+    if (historyData) {
+      history = historyData as { role: "user" | "assistant"; content: string }[];
     }
 
     // Generate AI response with history context
     const aiResponse = await generateChatResponse(message, history);
 
     // Save AI response
-    if (userId && activeConversationId) {
+    if (userId) {
       const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
-        conversation_id: activeConversationId,
+        conversation_id: conversationId,
         role: "assistant",
         content: aiResponse,
       });
@@ -88,13 +70,10 @@ export async function POST(request: NextRequest) {
       await supabase
         .from("conversations")
         .update({ updated_at: new Date().toISOString() })
-        .eq("id", activeConversationId);
+        .eq("id", conversationId);
     }
 
-    return NextResponse.json({
-      response: aiResponse,
-      conversationId: activeConversationId,
-    });
+    return NextResponse.json({ response: aiResponse });
   } catch (error: unknown) {
     console.error("Chat API Error:", error);
     const message = error instanceof Error ? error.message : "Unknown error";

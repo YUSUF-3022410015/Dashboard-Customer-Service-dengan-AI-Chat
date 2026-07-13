@@ -162,6 +162,7 @@ export default function ChatPage() {
           onSelectConversation={handleSelectConversation}
           onNewChat={handleNewChat}
           refreshKey={sidebarRefreshKey}
+          onClose={() => setSidebarOpen(false)}
         />
       </div>
 

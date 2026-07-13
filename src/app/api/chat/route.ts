@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     // Create new conversation if none provided
     if (!activeConversationId && userId) {
       const title = message.length > 30 ? message.substring(0, 30) + "..." : message;
+      console.log("Creating conversation for user:", userId, "title:", title);
       const { data: newConv, error: convError } = await supabase
         .from("conversations")
         .insert({
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
       if (convError) {
         console.error("Create conversation error:", convError);
       } else {
+        console.log("Conversation created:", newConv.id);
         activeConversationId = newConv.id;
       }
     }

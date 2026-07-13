@@ -40,7 +40,7 @@ export default function LoginPage() {
               <Bot className="h-8 w-8 text-emerald-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Masuk ke Yusuf AI</CardTitle>
+          <CardTitle className="text-2xl">Masuk ke Partner AI</CardTitle>
           <CardDescription>Silakan masuk untuk mulai chat</CardDescription>
         </CardHeader>
         <CardContent>

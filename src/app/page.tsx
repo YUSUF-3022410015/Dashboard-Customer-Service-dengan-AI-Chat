@@ -10,7 +10,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bot className="h-8 w-8 text-emerald-600" />
-            <span className="text-xl font-bold text-gray-900">Yusuf AI</span>
+            <span className="text-xl font-bold text-gray-900">Partner AI</span>
           </div>
           <div className="flex gap-3">
             <Link href="/login">
@@ -62,7 +62,7 @@ export default function Home() {
               Curhat & Ngobrol
             </h3>
             <p className="text-gray-600">
-              Lagi ada masalah? Cerita aja ke Yusuf AI. Dengerin, support,
+              Lagi ada masalah? Cerita aja ke Partner AI. Dengerin, support,
               dan kasih solusi dengan santai.
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function Home() {
               Bantu Belajar
             </h3>
             <p className="text-gray-600">
-              Tugas numpuk? Bingung materi kuliah? Yusuf AI bantu jelasin
+              Tugas numpuk? Bingung materi kuliah? Partner AI bantu jelasin
               dengan cara yang gampang dipahami.
             </p>
           </div>

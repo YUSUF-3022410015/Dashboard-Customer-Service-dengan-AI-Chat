@@ -198,7 +198,7 @@ export default function ChatPage() {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <span className="font-semibold text-gray-900">Yusuf AI</span>
+          <span className="font-semibold text-gray-900">Partner AI</span>
         </div>
 
         {/* Messages or Welcome Screen */}
@@ -212,7 +212,7 @@ export default function ChatPage() {
                 Hey! Ada yang bisa dibantu?
               </h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                Yusuf AI siap jadi temen curhat, tanya tugas, atau sekadar ngobrol santai.
+                Partner AI siap jadi temen curhat, tanya tugas, atau sekadar ngobrol santai.
               </p>
               <div className="flex flex-wrap gap-2 justify-center mt-4">
                 {[

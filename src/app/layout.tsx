@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Yusuf AI - Temen Curhat & Belajar",
+  title: "Partner AI - Temen Curhat & Belajar",
   description: "AI chatbot temen curhat, belajar, dan ngobrol santai",
 };
 

@@ -127,12 +127,12 @@ export default function DashboardPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Bot className="h-5 w-5 text-emerald-600" />
-            Tentang Yusuf AI
+            Tentang Partner AI
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Yusuf AI adalah temen curhat dan belajar berbasis AI.
+            Partner AI adalah temen curhat dan belajar berbasis AI.
             Didukung oleh Google Gemini AI model gemini-2.0-flash.
           </p>
           <div className="grid grid-cols-2 gap-4 text-sm">

@@ -53,7 +53,7 @@ export default function RegisterPage() {
               <Bot className="h-8 w-8 text-emerald-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Daftar Yusuf AI</CardTitle>
+          <CardTitle className="text-2xl">Daftar Partner AI</CardTitle>
           <CardDescription>Buat akun baru untuk mulai chat</CardDescription>
         </CardHeader>
         <CardContent>

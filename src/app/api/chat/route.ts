@@ -23,21 +23,23 @@ export async function POST(request: NextRequest) {
     const supabase = createServerClient();
 
     if (userId) {
-      await supabase.from("chat_messages").insert({
+      const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
         role: "user",
         content: message,
       });
+      if (insertError) console.error("Insert user message error:", insertError);
     }
 
     const aiResponse = await generateChatResponse(message);
 
     if (userId) {
-      await supabase.from("chat_messages").insert({
+      const { error: insertError } = await supabase.from("chat_messages").insert({
         user_id: userId,
         role: "assistant",
         content: aiResponse,
       });
+      if (insertError) console.error("Insert assistant message error:", insertError);
     }
 
     return NextResponse.json({ response: aiResponse });

@@ -35,11 +35,15 @@ export function ConversationSidebar({
       if (!user) return;
       setLoading(true);
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("conversations")
         .select("id, title, updated_at")
         .eq("user_id", user.id)
         .order("updated_at", { ascending: false });
+
+      if (error) {
+        console.error("Load conversations error:", error);
+      }
 
       if (data) {
         setConversations(data as Conversation[]);

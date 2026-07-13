@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User, Loader2, Menu } from "lucide-react";
 import { ConversationSidebar } from "@/components/ConversationSidebar";
 
 interface Message {
@@ -23,6 +23,7 @@ export default function ChatPage() {
   const [sending, setSending] = useState(false);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [sidebarRefreshKey, setSidebarRefreshKey] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,10 +64,12 @@ export default function ChatPage() {
   const handleNewChat = () => {
     setActiveConversationId(null);
     setMessages([]);
+    setSidebarOpen(false);
   };
 
   const handleSelectConversation = (id: string) => {
     setActiveConversationId(id);
+    setSidebarOpen(false);
   };
 
   const handleSend = async () => {
@@ -96,12 +99,10 @@ export default function ChatPage() {
           { role: "assistant", content: data.response },
         ]);
 
-        // Update conversation ID if new conversation was created
         if (data.conversationId && !activeConversationId) {
           setActiveConversationId(data.conversationId);
           setSidebarRefreshKey((k) => k + 1);
         } else if (data.conversationId) {
-          // Refresh sidebar to update timestamp
           setSidebarRefreshKey((k) => k + 1);
         }
       } else if (data.error) {
@@ -139,17 +140,45 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex h-full">
-      {/* Sidebar */}
-      <ConversationSidebar
-        activeConversationId={activeConversationId}
-        onSelectConversation={handleSelectConversation}
-        onNewChat={handleNewChat}
-        refreshKey={sidebarRefreshKey}
-      />
+    <div className="flex h-full relative">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - hidden on mobile, visible on lg */}
+      <div
+        className={`
+          fixed lg:static inset-y-0 left-0 z-50
+          transform transition-transform duration-200 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}
+      >
+        <ConversationSidebar
+          activeConversationId={activeConversationId}
+          onSelectConversation={handleSelectConversation}
+          onNewChat={handleNewChat}
+          refreshKey={sidebarRefreshKey}
+        />
+      </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-white min-w-0">
+        {/* Mobile Header with Hamburger */}
+        <div className="lg:hidden flex items-center gap-3 p-3 border-b bg-white">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <span className="font-semibold text-gray-900">Yusuf AI</span>
+        </div>
+
         {/* Messages or Welcome Screen */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && !activeConversationId ? (
@@ -165,7 +194,7 @@ export default function ChatPage() {
               </p>
               <div className="flex flex-wrap gap-2 justify-center mt-4">
                 {[
-                  "Gimana cara belajar TypeScript yang bener?",
+                  "Gimana cara belajar TypeScript?",
                   "Aku lagi stress sama tugas nih",
                   "Jelasin dong soal database!",
                 ].map((suggestion) => (
@@ -191,7 +220,7 @@ export default function ChatPage() {
                   </div>
                 )}
                 <div
-                  className={`max-w-[70%] px-4 py-3 rounded-2xl ${
+                  className={`max-w-[85%] lg:max-w-[70%] px-4 py-3 rounded-2xl ${
                     msg.role === "user"
                       ? "bg-emerald-600 text-white rounded-br-md"
                       : "bg-gray-100 text-gray-900 rounded-bl-md"
@@ -223,8 +252,8 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <div className="bg-white border-t p-4">
-          <div className="flex gap-3">
+        <div className="border-t p-3 lg:p-4 bg-white">
+          <div className="flex gap-2 lg:gap-3">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -241,7 +270,7 @@ export default function ChatPage() {
               <Send className="h-5 w-5" />
             </Button>
           </div>
-          <p className="text-xs text-gray-400 mt-2 text-center">
+          <p className="text-xs text-gray-400 mt-2 text-center hidden sm:block">
             Powered by Google Gemini AI - Final Project Sistem Informasi UISI
           </p>
         </div>

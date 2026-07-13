@@ -105,8 +105,7 @@ export default function ChatPage() {
         return;
       }
 
-      // Add user message to UI after conversation is confirmed
-      setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+      // Don't add to UI yet - wait for API to confirm save
 
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -120,11 +119,18 @@ export default function ChatPage() {
 
       const data = await res.json();
 
+      // Reload all messages from DB to ensure consistency
+      const { data: freshMessages } = await supabase
+        .from("chat_messages")
+        .select("id, role, content")
+        .eq("conversation_id", convId)
+        .order("created_at", { ascending: true });
+
+      if (freshMessages) {
+        setMessages(freshMessages as Message[]);
+      }
+
       if (data.response) {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: data.response },
-        ]);
         setSidebarRefreshKey((k) => k + 1);
       } else if (data.error) {
         setMessages((prev) => [

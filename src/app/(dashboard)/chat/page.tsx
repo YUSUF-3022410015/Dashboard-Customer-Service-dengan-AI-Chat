@@ -76,6 +76,11 @@ export default function ChatPage() {
           ...prev,
           { role: "assistant", content: data.response },
         ]);
+      } else if (data.error) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: `Error: ${data.error}` },
+        ]);
       }
     } catch {
       setMessages((prev) => [

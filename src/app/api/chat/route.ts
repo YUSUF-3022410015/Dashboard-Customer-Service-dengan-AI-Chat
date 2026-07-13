@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY belum dikonfigurasi di server" },
+        { error: "GEMINI_API_KEY tidak ditemukan di environment variables Vercel" },
         { status: 500 }
       );
     }
@@ -41,10 +41,11 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ response: aiResponse });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Chat API Error:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: message },
       { status: 500 }
     );
   }

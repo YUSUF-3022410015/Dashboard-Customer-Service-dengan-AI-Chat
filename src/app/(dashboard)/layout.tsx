@@ -10,9 +10,9 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-gray-50">
+      <div className="flex flex-col h-screen">
         <Navbar />
-        <main>{children}</main>
+        <main className="flex-1 overflow-hidden">{children}</main>
       </div>
     </AuthProvider>
   );

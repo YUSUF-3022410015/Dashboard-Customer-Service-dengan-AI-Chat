@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
-import { Bot, LogOut, MessageCircle, LayoutDashboard } from "lucide-react";
+import { Bot, LogOut, MessageCircle, LayoutDashboard, FileText } from "lucide-react";
 
 export function Navbar() {
   const { user, signOut } = useAuth();
@@ -32,6 +32,15 @@ export function Navbar() {
             >
               <MessageCircle className="h-4 w-4 mr-2" />
               Chat
+            </Button>
+          </Link>
+          <Link href="/documents">
+            <Button
+              variant={pathname === "/documents" ? "default" : "ghost"}
+              className={pathname === "/documents" ? "bg-emerald-600 hover:bg-emerald-700" : ""}
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              Dokumen
             </Button>
           </Link>
           <Link href="/dashboard">

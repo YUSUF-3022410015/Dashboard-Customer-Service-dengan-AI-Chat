@@ -131,7 +131,7 @@ export function ConversationSidebar({
 
       {/* Footer */}
       <div className="p-3 border-t border-gray-700 text-xs text-gray-500 text-center">
-        Partner AI - Curhat & Belajar
+        Partner AI - Knowledge Base Perusahaan
       </div>
     </div>
   );

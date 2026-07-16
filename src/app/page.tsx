@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Bot, Shield, Zap } from "lucide-react";
+import { MessageCircle, Bot, Shield, FileText, Building, Search } from "lucide-react";
 
 export default function Home() {
   return (
@@ -27,16 +27,16 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-4 py-20">
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium">
-            <MessageCircle className="h-4 w-4" />
-            AI-Powered Study & Vent Buddy
+            <Building className="h-4 w-4" />
+            AI Knowledge Base untuk Internal Perusahaan
           </div>
           <h1 className="text-5xl font-bold text-gray-900 tracking-tight">
             Partner
             <span className="text-emerald-600"> AI</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Temen curhat, belajar, dan ngobrol santai berbasis AI.
-            Kapan aja bisa cerita, tanya tugas, atau sekadar brainstorming.
+            Asisten AI yang paham SOP, peraturan, dan prosedur perusahaanmu.
+            Upload dokumen internal, dan biarkan AI menjawab pertanyaan karyawan.
           </p>
           <div className="flex gap-4 justify-center pt-4">
             <Link href="/register">
@@ -56,27 +56,27 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8 mt-24">
           <div className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-              <Bot className="h-6 w-6 text-emerald-600" />
+              <FileText className="h-6 w-6 text-emerald-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Curhat & Ngobrol
+              Upload Dokumen Internal
             </h3>
             <p className="text-gray-600">
-              Lagi ada masalah? Cerita aja ke Partner AI. Dengerin, support,
-              dan kasih solusi dengan santai.
+              Upload SOP, peraturan, dan prosedur perusahaan. AI otomatis
+              memproses dan memahami isinya.
             </p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-blue-600" />
+              <Search className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Bantu Belajar
+              Tanya, AI Jawab
             </h3>
             <p className="text-gray-600">
-              Tugas numpuk? Bingung materi kuliah? Partner AI bantu jelasin
-              dengan cara yang gampang dipahami.
+              Karyawan cukup bertanya seperti "Bagaimana prosedur cuti?".
+              AI menjawab berdasarkan dokumen perusahaan.
             </p>
           </div>
 
@@ -88,8 +88,8 @@ export default function Home() {
               Privat & Aman
             </h3>
             <p className="text-gray-600">
-              Chat hanya tersimpan di akun kamu. Autentikasi aman dengan
-              Supabase Auth.
+              Data perusahaan hanya bisa diakses oleh akun terdaftar.
+              Dokumen internal tetap aman dan tidak bocor.
             </p>
           </div>
         </div>

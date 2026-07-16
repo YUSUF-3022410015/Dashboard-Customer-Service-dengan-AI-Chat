@@ -132,23 +132,23 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Partner AI adalah temen curhat dan belajar berbasis AI.
-            Didukung oleh Google Gemini AI model gemini-2.0-flash.
+            Partner AI adalah knowledge base perusahaan berbasis AI.
+            Karyawan bisa bertanya tentang SOP, peraturan, dan prosedur perusahaan.
           </p>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="bg-emerald-50 p-4 rounded-lg">
               <p className="font-medium text-emerald-800">Fitur:</p>
-              <p className="text-emerald-600">Curhat, Belajar, Ngobrol</p>
+              <p className="text-emerald-600">Upload Dokumen, RAG Chat, Knowledge Base</p>
             </div>
             <div className="bg-blue-50 p-4 rounded-lg">
               <p className="font-medium text-blue-800">Teknologi:</p>
-              <p className="text-blue-600">Next.js, Supabase, Gemini AI</p>
+              <p className="text-blue-600">Next.js, Supabase, Gemini AI, pgvector</p>
             </div>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg text-sm text-gray-600">
             <p><strong>Pengembang:</strong> Yusuf Dede Yonaldy</p>
             <p><strong>Program Studi:</strong> Sistem Informasi UISI</p>
-            <p><strong>Final Project:</strong> AI Chatbot for Business & Academic</p>
+            <p><strong>Final Project:</strong> AI Knowledge Base for Internal Company</p>
           </div>
         </CardContent>
       </Card>

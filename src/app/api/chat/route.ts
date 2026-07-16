@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateChatResponse } from "@/lib/gemini";
 import { createServerClient } from "@/lib/supabase-server";
+import { retrieveRelevantChunks } from "@/lib/document-processor";
 
 export async function POST(request: NextRequest) {
   try {
@@ -54,8 +55,19 @@ export async function POST(request: NextRequest) {
       history = historyData.slice(0, -1) as { role: "user" | "assistant"; content: string }[];
     }
 
-    // Generate AI response with history context
-    const aiResponse = await generateChatResponse(message, history);
+    // RAG: Retrieve relevant document chunks for context
+    let documentContext = "";
+    if (userId) {
+      const chunks = await retrieveRelevantChunks(supabase, userId, message);
+      if (chunks.length > 0) {
+        documentContext = chunks
+          .map((c) => `[Dari dokumen: ${c.documentTitle}]\n${c.content}`)
+          .join("\n\n---\n\n");
+      }
+    }
+
+    // Generate AI response with history context + document context
+    const aiResponse = await generateChatResponse(message, history, documentContext);
 
     // Save AI response
     if (userId) {

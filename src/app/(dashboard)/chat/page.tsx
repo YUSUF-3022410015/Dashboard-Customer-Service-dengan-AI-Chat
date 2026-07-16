@@ -204,27 +204,29 @@ export default function ChatPage() {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <span className="font-semibold text-gray-900">Partner AI</span>
+          <span className="font-semibold text-gray-900">Partner AI - Knowledge Base</span>
         </div>
 
         {/* Messages or Welcome Screen */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && !activeConversationId ? (
-            <div className="text-center py-12">
+              <div className="text-center py-12">
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bot className="h-10 w-10 text-emerald-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Hey! Ada yang bisa dibantu?
+                Ada yang bisa saya bantu?
               </h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                Partner AI siap jadi temen curhat, tanya tugas, atau sekadar ngobrol santai.
+                Partner AI — Asisten internal perusahaan untuk SOP, peraturan, dan prosedur perusahaanmu.
               </p>
               <div className="flex flex-wrap gap-2 justify-center mt-4">
                 {[
-                  "Gimana cara belajar TypeScript?",
-                  "Aku lagi stress sama tugas nih",
-                  "Jelasin dong soal database!",
+                  "Bagaimana prosedur pengajuan cuti?",
+                  "Jelaskan SOP keselamatan kerja",
+                  "Apa saja peraturan perusahaan?",
+                  "Bagaimana cara mengajukan reimbursement?",
+                  "Siapa yang harus dihubungi untuk IT support?",
                 ].map((suggestion) => (
                   <button
                     key={suggestion}
@@ -299,7 +301,7 @@ export default function ChatPage() {
             </Button>
           </div>
           <p className="text-xs text-gray-400 mt-2 text-center hidden sm:block">
-            Powered by Google Gemini AI - Final Project Sistem Informasi UISI
+            Partner AI - Internal Company Knowledge Base | Powered by Google Gemini AI
           </p>
         </div>
       </div>
